@@ -79,8 +79,14 @@ class BasePlugin:
         return
 
     def onStart(self):
-        Domoticz.Log("Waiting 60 seconds to connect TuyaApi login timeout")
-        time.sleep(60)
+        Domoticz.Log("Waiting 60 seconds to connect TuyaApi login error timeout")
+        t = 60
+        t_end = time.time() + t
+        while time.time() < t_end:
+            t = t - 1
+            Domoticz.Log("Waiting " + str(t) + " seconds to connect TuyaApi (Tuya Plug-in)")
+            time.sleep(1.0)            
+            
         Domoticz.Log("TUYA plugin started")
         if Parameters["Mode6"] != "0":
             Domoticz.Debugging(int(Parameters["Mode6"]))
