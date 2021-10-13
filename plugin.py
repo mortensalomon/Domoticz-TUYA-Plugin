@@ -85,9 +85,6 @@ class BasePlugin:
         if Parameters["Mode6"] != "0":
             Domoticz.Debugging(int(Parameters["Mode6"]))
             DumpConfigToLog()
-        # Mark all existing devices as off/timed out initially (until they are discovered)
-        for u in Devices:
-            UpdateDevice(u, 0, 'Off', True)
         # If Mode2 is not set (previous version didn't use it), set it
         if Parameters["Mode2"] == "":
             Parameters["Mode2"] = "tuya"
@@ -273,9 +270,9 @@ class BasePlugin:
                 #if dev.device_type() == 'cover' and dev.state() != 'Stop':
                 #    UpdateDevice(unit, 1, 'Stop', not dev.available())
 
-                #if dev.state() == True and not dev.available():
-                #    UpdateDevice(unit, 0, 'Off', not dev.available())
-                #    Domoticz.Log('DeviceID='+Devices[unit].DeviceID+' Turned off because device is offline.')
+                if dev.state() == True and not dev.available():
+                    UpdateDevice(unit, 0, 'Off', not dev.available())
+                    Domoticz.Log('DeviceID='+Devices[unit].DeviceID+' Turned off because device is offline.')
 
         except Exception as err:
             Domoticz.Error("handleThread: "+str(err)+' line '+format(sys.exc_info()[-1].tb_lineno))
