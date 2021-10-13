@@ -184,10 +184,10 @@ class BasePlugin:
         Domoticz.Debug("onDisconnect called")
 
     def onHeartbeat(self):
-        Domoticz.Debug("onHeartbeat called time="+str(time.time()))
         # If it hasn't been at least 1 minute since last update, skip it
         if time.time() - self.last_update < 61:
             return
+        Domoticz.Debug("onHeartbeat called time="+str(time.time()))
         self.startup = False
         # Create/Start update thread
         self.updateThread = threading.Thread(name="TUYAUpdateThread", target=BasePlugin.handleThread, args=(self,))
