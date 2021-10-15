@@ -5,12 +5,12 @@
 # Contributed: Xenomes (xenomes@outlook.com)
 #
 """
-<plugin key="tuya" name="TUYA" author="Wagner Oliveira contributed Xenomes" version="1.0.12" wikilink="" externallink="https://github.com/Xenomes/Domoticz-TUYA-Plugin.git">
+<plugin key="tuya" name="TUYA" author="Wagner Oliveira contributed Xenomes" version="1.0.13" wikilink="" externallink="https://github.com/Xenomes/Domoticz-TUYA-Plugin.git">
     <description>
         Support forum: <a href="https://www.domoticz.com/forum/viewtopic.php?f=65&amp;t=33145">https://www.domoticz.com/forum/viewtopic.php?f=65&amp;t=33145</a><br/>
         Support forum Dutch: <a href="https://contactkring.nl/phpbb/viewtopic.php?f=60&amp;t=846">https://contactkring.nl/phpbb/viewtopic.php?f=60&amp;t=846</a><br/>
         <br/>
-        <h2>TUYA Plugin v.1.0.12</h2><br/>
+        <h2>TUYA Plugin v.1.0.13</h2><br/>
         This plugin is meant to control TUYA devices (mainly on/off switches and LED lights). TUYA devices may come with different brands and different Apps such as Smart Life or Jinvoo Smart, so select the corresponding App you're using below.
         <h3>Features</h3>
         <ul style="list-style-type:square">
@@ -79,15 +79,17 @@ class BasePlugin:
         return
 
     def onStart(self):
-        Domoticz.Log("Waiting 60 seconds to connect TuyaApi login timeout")
-        time.sleep(60)
+        Domoticz.Log("Waiting 60 seconds to connect TuyaApi login error timeout")
+        t = 60
+        t_end = time.time() + t
+        while time.time() < t_end:
+            t = t - 10
+            Domoticz.Log("Waiting " + str(t) + " seconds to connect TuyaApi (Tuya Plug-in)")
+            time.sleep(10.0)
         Domoticz.Log("TUYA plugin started")
         if Parameters["Mode6"] != "0":
             Domoticz.Debugging(int(Parameters["Mode6"]))
             DumpConfigToLog()
-        # Mark all existing devices as off/timed out initially (until they are discovered)
-        for u in Devices:
-            UpdateDevice(u, 0, 'Off', True)
         # If Mode2 is not set (previous version didn't use it), set it
         if Parameters["Mode2"] == "":
             Parameters["Mode2"] = "tuya"
@@ -187,10 +189,10 @@ class BasePlugin:
         Domoticz.Debug("onDisconnect called")
 
     def onHeartbeat(self):
-        Domoticz.Debug("onHeartbeat called time="+str(time.time()))
         # If it hasn't been at least 1 minute since last update, skip it
         if time.time() - self.last_update < 61:
             return
+        Domoticz.Debug("onHeartbeat called time="+str(time.time()))
         self.startup = False
         # Create/Start update thread
         self.updateThread = threading.Thread(name="TUYAUpdateThread", target=BasePlugin.handleThread, args=(self,))
@@ -279,6 +281,7 @@ class BasePlugin:
 
         except Exception as err:
             Domoticz.Error("handleThread: "+str(err)+' line '+format(sys.exc_info()[-1].tb_lineno))
+            
 
 global _plugin
 _plugin = BasePlugin()
