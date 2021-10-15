@@ -31,7 +31,7 @@ To update:
 
 ## Configuration
 
-Enter your username and password for your app account along with your country code (1=US/Canada, 55=Brazil, etc). The initial setup of your devices should be done with the app and this plugin will detect/use the same settings and automatically find/add the devices into Domoticz.
+Enter your username and password for your app account along with your country code (1=US/Canada, 55=Brazil, etc), keep the setti'Data Timeout' disabled. The initial setup of your devices should be done with the app and this plugin will detect/use the same settings and automatically find/add the devices into Domoticz.
 
 ## Usage
 
@@ -42,6 +42,7 @@ Devices detected are created in the 'Devices' tab, to use them you need to click
 
 | Version | Information|
 | ----- | ---------- |
+| 1.0.13 | Disabled turn off devices at startup |
 | 1.0.12 | Fix for cover or blinds status |
 | 1.0.11 | Added stop for cover or blinds |
 | 1.0.10 | Added turn off for off-line devices |
