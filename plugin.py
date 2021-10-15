@@ -83,10 +83,9 @@ class BasePlugin:
         t = 60
         t_end = time.time() + t
         while time.time() < t_end:
-            t = t - 1
+            t = t - 10
             Domoticz.Log("Waiting " + str(t) + " seconds to connect TuyaApi (Tuya Plug-in)")
-            time.sleep(1.0)            
-            
+            time.sleep(10.0)
         Domoticz.Log("TUYA plugin started")
         if Parameters["Mode6"] != "0":
             Domoticz.Debugging(int(Parameters["Mode6"]))
@@ -282,6 +281,7 @@ class BasePlugin:
 
         except Exception as err:
             Domoticz.Error("handleThread: "+str(err)+' line '+format(sys.exc_info()[-1].tb_lineno))
+            
 
 global _plugin
 _plugin = BasePlugin()
