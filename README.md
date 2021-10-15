@@ -31,7 +31,7 @@ To update:
 
 ## Configuration
 
-Enter your username and password for your app account along with your country code (1=US/Canada, 55=Brazil, etc), keep the setti'Data Timeout' disabled. The initial setup of your devices should be done with the app and this plugin will detect/use the same settings and automatically find/add the devices into Domoticz.
+Enter your username and password for your app account along with your country code (1=US/Canada, 55=Brazil, etc), keep the setting 'Data Timeout' disabled. The initial setup of your devices should be done with the app and this plugin will detect/use the same settings and automatically find/add the devices into Domoticz.
 
 ## Usage
 
