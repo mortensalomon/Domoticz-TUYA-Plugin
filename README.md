@@ -10,6 +10,7 @@ Controls TUYA devices your network (mainly on/off switches and Lights). Tuya dev
 * Cloud control only uses your user/password account with encrypted communications without requiring IP or device IDs or Keys to configure it
 * Allows controlling Dimmer/RGB(WW) Colour for lights (⚠ RGBW(W) lights must be on a colour for correct detection ⚠)
 * Supports scene activation
+* Added quick & dirty heater reading - two devices will be added; the switch device and a temparature sensor device (mortensalomon)
 
 ## Installation
 
