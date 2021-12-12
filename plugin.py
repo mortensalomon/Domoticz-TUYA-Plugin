@@ -256,7 +256,7 @@ class BasePlugin:
                         Domoticz.Device(Name=dev.name(), Unit=unit, Type=244, Subtype=73, Switchtype=0, Image=16, DeviceID=dev.object_id()).Create()
                         if tunit == 0:
                             tunit = nextUnit()
-                            Domoticz.Device(Name=dev.name()+' (Temp)', Unit=tunit, Type=80, Subtype=5, Image=16, DeviceID='TEMP'+dev.object_id()).Create()
+                            Domoticz.Device(Name=dev.name(), Unit=tunit, Type=80, Subtype=5, Image=16, DeviceID='TEMP'+dev.object_id()).Create()
                     elif dev_type == "scene":
                         Domoticz.Device(Name=dev.name(), Unit=unit, Type=244, Subtype=73, Switchtype=9, Image=9, DeviceID=dev.object_id()).Create()
                     elif dev_type == "fan":
