@@ -223,6 +223,7 @@ class BasePlugin:
                 Domoticz.Debug( "DEV name=" + dev.name() + " state=" +str(dev.state()) + " id=" + str(dev.object_id()) + " online=" + str(dev.available()) )
                 # Get unit number, if any
                 unit = getUnit(dev.object_id())
+                tunit = getUnit('TEMP'+dev.object_id())
                 # If it's not in Domoticz already
                 if unit == 0:
                     # Add it in the next available unit number
@@ -253,6 +254,9 @@ class BasePlugin:
                             Domoticz.Debug("No controls found for your light device!")
                     elif dev_type == "climate":
                         Domoticz.Device(Name=dev.name(), Unit=unit, Type=244, Subtype=73, Switchtype=0, Image=16, DeviceID=dev.object_id()).Create()
+                        if tunit == 0:
+                            tunit = nextUnit()
+                            Domoticz.Device(Name=dev.name()+' (Temp)', Unit=tunit, Type=80, Subtype=5, Image=16, DeviceID='TEMP'+dev.object_id()).Create()
                     elif dev_type == "scene":
                         Domoticz.Device(Name=dev.name(), Unit=unit, Type=244, Subtype=73, Switchtype=9, Image=9, DeviceID=dev.object_id()).Create()
                     elif dev_type == "fan":
@@ -271,6 +275,10 @@ class BasePlugin:
                     UpdateDevice(unit, 1, 'On', not dev.available())
                 else:
                     Domoticz.Log('DeviceID='+Devices[unit].DeviceID+' State update skiped. status = '+str(dev.state()))
+
+                if tunit != 0 and dev.device_type() == 'climate':
+                    UpdateDevice(tunit, dev.data.get("current_temperature"), str(dev.data.get("current_temperature")), not dev.available())
+                    Domoticz.Log('DeviceID='+Devices[tunit].DeviceID+' set to '+str(dev.data.get("temperature"))+' currently at '+str(dev.data.get("current_temperature")))
 
                 #if dev.device_type() == 'cover' and dev.state() != 'Stop':
                 #    UpdateDevice(unit, 1, 'Stop', not dev.available())
